@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Maven wrapper script for Unix-based systems
+# Use this script to run Maven commands without requiring a local installation
+
+MAVEN_VERSION=3.8.6
+MVN_CMD="mvn"
+
+# Check if Maven is installed
+if ! command -v $MVN_CMD &> /dev/null
+then
+    echo "Maven could not be found. Downloading Maven $MAVEN_VERSION..."
+    # Download and install Maven
+    curl -sL "https://archive.apache.org/dist/maven/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz" | tar xz -C /tmp
+    mv /tmp/apache-maven-$MAVEN_VERSION /opt/maven
+    echo "Maven installed at /opt/maven"
+    export PATH=$PATH:/opt/maven/bin
+fi
+
+# Execute Maven with the provided arguments
+exec $MVN_CMD "$@"

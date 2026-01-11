@@ -1,0 +1,12 @@
+{
+    "files.exclude": {
+      "**/target": true
+    },
+    "search.exclude": {
+      "**/target": true
+    },
+    "java.compile.nullAnalysis.level": "off",
+    "java.errors.incompleteClasspath.severity": "ignore",
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.compile.nullAnalysis.mode": "automatic",
+  }

@@ -1,0 +1,307 @@
+// Variables
+$primary: #6366f1
+$primary-dark: #4f46e5
+$success: #10b981
+$danger: #ef4444
+$gray-50: #f9fafb
+$gray-100: #f3f4f6
+$gray-200: #e5e7eb
+$gray-500: #6b7280
+$gray-700: #374151
+$gray-900: #111827
+$radius: 12px
+$shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)
+
+*
+  box-sizing: border-box
+
+.app
+  max-width: 900px
+  margin: 0 auto
+  padding: 20px
+  font-family: 'Segoe UI', system-ui, sans-serif
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
+  min-height: 100vh
+
+.header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  margin-bottom: 24px
+  padding: 20px 24px
+  background: white
+  border-radius: $radius
+  box-shadow: $shadow
+
+  h1
+    margin: 0
+    font-size: 1.8rem
+    color: $gray-900
+
+.btn-refresh
+  padding: 10px 20px
+  border: none
+  border-radius: 8px
+  background: $gray-100
+  color: $gray-700
+  cursor: pointer
+  font-size: 0.9rem
+  transition: all 0.2s
+
+  &:hover
+    background: $gray-200
+    transform: translateY(-1px)
+
+.main
+  display: grid
+  grid-template-columns: 1fr 1fr
+  gap: 20px
+  margin-bottom: 20px
+
+.panel
+  background: white
+  border-radius: $radius
+  padding: 20px
+  box-shadow: $shadow
+
+  h2
+    margin: 0 0 16px 0
+    font-size: 1.2rem
+    color: $gray-900
+
+.items-grid
+  display: flex
+  flex-direction: column
+  gap: 10px
+
+.item-card
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding: 12px 16px
+  background: $gray-50
+  border-radius: 8px
+  transition: all 0.2s
+
+  &:hover
+    background: $gray-100
+    transform: translateX(4px)
+
+.item-info
+  display: flex
+  flex-direction: column
+  gap: 4px
+
+.item-name
+  font-weight: 600
+  color: $gray-900
+
+.item-price
+  color: $primary
+  font-weight: 500
+
+.item-actions
+  display: flex
+  align-items: center
+  gap: 10px
+
+.badge
+  padding: 4px 10px
+  border-radius: 20px
+  font-size: 0.75rem
+  font-weight: 600
+  background: #dcfce7
+  color: #166534
+
+  &.low
+    background: #fef3c7
+    color: #92400e
+
+.btn-add
+  width: 36px
+  height: 36px
+  border: none
+  border-radius: 50%
+  background: $primary
+  color: white
+  font-size: 1.2rem
+  cursor: pointer
+  transition: all 0.2s
+
+  &:hover:not(:disabled)
+    background: $primary-dark
+    transform: scale(1.1)
+
+  &:disabled
+    background: $gray-200
+    cursor: not-allowed
+
+.cart-items
+  display: flex
+  flex-direction: column
+  gap: 10px
+  min-height: 100px
+
+.cart-item
+  display: flex
+  align-items: center
+  gap: 12px
+  padding: 12px
+  background: $gray-50
+  border-radius: 8px
+
+.cart-name
+  flex: 1
+  font-weight: 500
+
+.cart-price
+  color: $primary
+  font-weight: 600
+
+.quantity-controls
+  display: flex
+  align-items: center
+  gap: 8px
+
+.btn-qty
+  width: 28px
+  height: 28px
+  border: 1px solid $gray-200
+  border-radius: 6px
+  background: white
+  cursor: pointer
+  font-size: 1rem
+  transition: all 0.2s
+
+  &:hover
+    background: $gray-100
+    border-color: $primary
+
+.qty
+  min-width: 24px
+  text-align: center
+  font-weight: 600
+
+.cart-footer
+  margin-top: 16px
+  padding-top: 16px
+  border-top: 1px solid $gray-200
+
+.total
+  font-size: 1.1rem
+  margin-bottom: 12px
+  color: $gray-700
+
+  strong
+    color: $gray-900
+
+.btn-validate
+  width: 100%
+  padding: 12px
+  border: none
+  border-radius: 8px
+  background: $success
+  color: white
+  font-size: 1rem
+  font-weight: 600
+  cursor: pointer
+  transition: all 0.2s
+
+  &:hover
+    background: #059669
+    transform: translateY(-2px)
+
+.orders-panel
+  margin-bottom: 20px
+
+.orders-list
+  display: flex
+  flex-wrap: wrap
+  gap: 12px
+
+.order-card
+  padding: 12px 16px
+  background: $gray-50
+  border-radius: 8px
+  border-left: 4px solid $primary
+
+.order-header
+  font-weight: 600
+  color: $gray-900
+  margin-bottom: 8px
+
+.order-items
+  display: flex
+  flex-wrap: wrap
+  gap: 8px
+
+  span
+    padding: 4px 8px
+    background: white
+    border-radius: 4px
+    font-size: 0.85rem
+    color: $gray-500
+
+.upload-panel
+  margin-bottom: 20px
+
+.upload-zone
+  display: flex
+  align-items: center
+  gap: 12px
+
+  input[type="file"]
+    display: none
+
+.file-label
+  padding: 10px 20px
+  background: $gray-100
+  border-radius: 8px
+  cursor: pointer
+  transition: all 0.2s
+
+  &:hover
+    background: $gray-200
+
+.btn-upload
+  padding: 10px 24px
+  border: none
+  border-radius: 8px
+  background: $primary
+  color: white
+  cursor: pointer
+  transition: all 0.2s
+
+  &:hover:not(:disabled)
+    background: $primary-dark
+
+  &:disabled
+    background: $gray-200
+    color: $gray-500
+    cursor: not-allowed
+
+.upload-status
+  margin-top: 12px
+
+.progress-bar
+  height: 6px
+  background: $gray-200
+  border-radius: 3px
+  overflow: hidden
+
+.progress
+  height: 100%
+  background: $success
+  transition: width 0.3s
+
+.message
+  display: block
+  margin-top: 8px
+  color: $success
+  font-weight: 500
+
+.empty
+  text-align: center
+  color: $gray-500
+  padding: 20px
+  font-style: italic

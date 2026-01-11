@@ -1,0 +1,77 @@
+<div class="app">
+  <header class="header">
+    <h1>🛒 {{ title }}</h1>
+    <button class="btn-refresh" (click)="refreshData()">🔄 Actualiser</button>
+  </header>
+
+  <main class="main">
+    <section class="panel stock-panel">
+      <h2>📦 Stock disponible</h2>
+      <div class="items-grid">
+        <div class="item-card" *ngFor="let item of (stock | async)?.productList">
+          <div class="item-info">
+            <span class="item-name">{{ item.product.productName }}</span>
+            <span class="item-price">{{ item.product.productPrice.toFixed(2) }} €</span>
+          </div>
+          <div class="item-actions">
+            <span class="badge" [class.low]="item.quantity < 5">{{ item.quantity }} dispo</span>
+            <button class="btn-add" (click)="addToCart(item.product)" [disabled]="item.quantity === 0">+</button>
+          </div>
+        </div>
+        <p class="empty" *ngIf="!(stock | async)?.productList?.length">Aucun produit en stock</p>
+      </div>
+    </section>
+
+    <section class="panel cart-panel">
+      <h2>🛍️ Mon panier</h2>
+      <div class="cart-items">
+        <div class="cart-item" *ngFor="let product of cart">
+          <span class="cart-name">{{ product.name }}</span>
+          <span class="cart-price">{{ product.price.toFixed(2) }} €</span>
+          <div class="quantity-controls">
+            <button class="btn-qty" (click)="removeFromCart(product)">−</button>
+            <span class="qty">{{ product.quantity }}</span>
+            <button class="btn-qty" (click)="addToCart(product)">+</button>
+          </div>
+        </div>
+        <p class="empty" *ngIf="!cart.length">Panier vide</p>
+      </div>
+      <div class="cart-footer" *ngIf="cart.length">
+        <div class="total">Total: <strong>{{ getCartTotal().toFixed(2) }} €</strong></div>
+        <button class="btn-validate" (click)="validateOrder()">✓ Valider la commande</button>
+      </div>
+    </section>
+  </main>
+
+  <section class="panel orders-panel">
+    <h2>📋 Historique des commandes</h2>
+    <div class="orders-list" *ngIf="(orders | async)?.length; else noOrders">
+      <div class="order-card" *ngFor="let order of orders | async">
+        <div class="order-header">Commande #{{ order.id }}</div>
+        <div class="order-items">
+          <span *ngFor="let item of order.orderedProductDtoList">
+            {{ item.product.productName }} × {{ item.quantity }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <ng-template #noOrders>
+      <p class="empty">Aucune commande</p>
+    </ng-template>
+  </section>
+
+  <section class="panel upload-panel">
+    <h2>📤 Importer des produits</h2>
+    <div class="upload-zone">
+      <input type="file" id="fileInput" (change)="onFileSelected($event)" accept=".txt,.csv" />
+      <label for="fileInput" class="file-label">📁 Choisir un fichier</label>
+      <button class="btn-upload" (click)="uploadProducts()" [disabled]="!selectedFile">Envoyer</button>
+    </div>
+    <div class="upload-status" *ngIf="uploadProgress !== null || uploadMessage">
+      <div class="progress-bar" *ngIf="uploadProgress !== null">
+        <div class="progress" [style.width.%]="uploadProgress"></div>
+      </div>
+      <span class="message" *ngIf="uploadMessage">{{ uploadMessage }}</span>
+    </div>
+  </section>
+</div>

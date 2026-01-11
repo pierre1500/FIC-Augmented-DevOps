@@ -1,0 +1,44 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "mvn clean install",
+            "type": "shell",
+            "command": "mvn",
+            "options": {
+                "cwd": "${workspaceFolder}/App/backend"
+            },
+            "args": [
+                "clean",
+                "install"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$maven"
+            ],
+            "detail": "Runs the Maven clean install command"
+        },{
+            "label": "mvn clean package",
+            "type": "shell",
+            "command": "mvn",
+            "options": {
+                "cwd": "${workspaceFolder}/App/backend"
+            },
+            "args": [
+                "clean",
+                "install"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$maven"
+            ],
+            "detail": "Runs the Maven package command"
+        }
+    ]
+}

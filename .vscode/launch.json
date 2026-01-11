@@ -1,0 +1,30 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch Java Program",
+      "request": "launch",
+      "mainClass": "${workspaceFolder}/App/backend/src/main/java/com/example/shopping/ShoppingListApplication.java"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Frontend",
+      "runtimeExecutable": "ng",
+      "runtimeArgs": ["serve"],
+      "cwd": "${workspaceFolder}/App/frontend",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Launch Front & Backend",
+      "configurations": [
+        "Launch Java Program",
+        "Launch Frontend"
+      ]
+    }
+  ]
+}

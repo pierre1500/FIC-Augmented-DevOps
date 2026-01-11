@@ -1,0 +1,3 @@
+USELESS_HEADER_FOR_FILE
+beer     10.4     Description of beer
+water    1.2      Description of water
