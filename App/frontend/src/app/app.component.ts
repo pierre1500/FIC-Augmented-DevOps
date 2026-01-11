@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { ShoppingService } from './shopping.service';
 import { Stock } from './models/stock.model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { OrderDto } from './models/order-dto.model';
 import { Product } from './models/product.model';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.sass'],
+  imports: [CommonModule, FormsModule, HttpClientModule]
 })
 export class AppComponent implements OnInit {
   title: string = 'My shopping list';
@@ -38,7 +42,7 @@ export class AppComponent implements OnInit {
   }
 
   addToCart(product: Product | { name: string; price: number; quantity: number }) {
-    let cartProduct: { name: string; price: number; quantity: number };
+    let cartProduct;
 
     if ('productName' in product && 'productPrice' in product) {
       // If the product is of type Product
