@@ -1,0 +1,65 @@
+# =============================================================================
+# Dockerfile Backend - Version Clean (Bonnes pratiques)
+# =============================================================================
+# Multi-stage build pour une image optimisée et sécurisée
+
+# -----------------------------------------------------------------------------
+# Stage 1: Build
+# -----------------------------------------------------------------------------
+FROM eclipse-temurin:17-jdk-alpine AS builder
+
+# Installation de Maven
+RUN apk add --no-cache maven
+
+WORKDIR /app
+
+# Copie des fichiers de configuration Maven en premier (cache des dépendances)
+COPY App/backend/pom.xml .
+
+# Téléchargement des dépendances (layer cached si pom.xml inchangé)
+RUN mvn dependency:go-offline -B
+
+# Copie du code source
+COPY App/backend/src ./src
+
+# Build de l'application
+RUN mvn clean package -DskipTests -B
+
+# -----------------------------------------------------------------------------
+# Stage 2: Runtime
+# -----------------------------------------------------------------------------
+FROM eclipse-temurin:17-jre-alpine AS runtime
+
+# Métadonnées de l'image
+LABEL maintainer="DevOps Team"
+LABEL version="1.0"
+LABEL description="Shopping List Backend API"
+
+# Création d'un utilisateur non-root pour la sécurité
+RUN addgroup -g 1001 appgroup && \
+    adduser -u 1001 -G appgroup -D appuser
+
+WORKDIR /app
+
+# Copie du JAR depuis le stage builder
+COPY --from=builder /app/target/*.jar app.jar
+
+# Changement de propriétaire
+RUN chown -R appuser:appgroup /app
+
+# Utilisation de l'utilisateur non-root
+USER appuser
+
+# Exposition du port
+EXPOSE 8080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=5 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:8080/h2-console || exit 1
+
+# Point d'entrée avec options JVM optimisées pour containers
+ENTRYPOINT ["java", \
+    "-XX:+UseContainerSupport", \
+    "-XX:MaxRAMPercentage=75.0", \
+    "-Djava.security.egd=file:/dev/./urandom", \
+    "-jar", "app.jar"]

@@ -1,0 +1,43 @@
+# Dependencies
+**/node_modules
+**/.npm
+
+# Build outputs
+**/dist
+**/target
+**/*.jar
+
+# IDE and editor files
+**/.idea
+**/.vscode
+**/*.iml
+
+# Git
+**/.git
+**/.gitignore
+
+# Documentation
+**/README.md
+**/*.md
+
+# Logs
+**/logs
+**/*.log
+**/npm-debug.log*
+
+# Test files
+**/*.spec.ts
+**/coverage
+
+# OS files
+**/.DS_Store
+**/Thumbs.db
+
+# Workshop and corrections (not needed in Docker build)
+Workshop/
+OLD/
+data/
+
+# Temporary files
+**/*.tmp
+**/*.temp

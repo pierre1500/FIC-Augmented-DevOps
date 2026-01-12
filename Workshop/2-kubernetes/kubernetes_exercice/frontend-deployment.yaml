@@ -1,0 +1,41 @@
+# =============================================================================
+# Frontend Deployment - Version Exercice (À corriger)
+# =============================================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: shopping-frontend
+          # PROBLÈME : pas de tag d'image
+          
+          ports:
+            - containerPort: 4200
+            # PROBLÈME : port de dev Angular au lieu de Nginx (80)
+          
+          # PROBLÈME : commande de dev au lieu de prod
+          command: ["npm", "start"]
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  type: LoadBalancer  # PROBLÈME : LoadBalancer coûteux, utiliser Ingress
+  selector:
+    app: frontend
+  ports:
+    - port: 80
+      targetPort: 4200

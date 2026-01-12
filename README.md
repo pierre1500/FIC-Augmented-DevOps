@@ -119,7 +119,7 @@ Pour chaque outil :
 
 **Bon workshop !**
 
-[Workshop 1-dockerfile](./workshop/1-dockerfile/README.md)
+[Workshop 1-dockerfile](./Y_Workshop/1-dockerfile/README.md)
 
 ---
 

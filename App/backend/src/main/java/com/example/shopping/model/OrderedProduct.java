@@ -25,7 +25,7 @@ public class OrderedProduct {
     @ToString.Exclude
     private Order order;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 

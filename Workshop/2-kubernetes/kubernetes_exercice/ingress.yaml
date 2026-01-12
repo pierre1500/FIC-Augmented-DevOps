@@ -1,0 +1,21 @@
+# =============================================================================
+# Ingress - Version Exercice (À corriger)
+# =============================================================================
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  # PROBLÈME : pas d'annotations
+spec:
+  # PROBLÈME : pas d'ingressClassName
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Exact  # PROBLÈME : devrait être Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
+          # PROBLÈME : route API manquante pour le backend

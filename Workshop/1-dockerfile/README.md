@@ -4,7 +4,7 @@
 Ce tutoriel porte sur un projet d'application web full-stack, composé d'un backend Java/Spring Boot et d'un frontend Angular. L'objectif est double :
 
 (1) apprendre à explorer et auditer rapidement la base de code (structure, dépendances, documentation) et
-(2) utiliser l'outil d'IA GitHub Copilot (dans VS Code, avec le mode agent) pour assister le développement. Le guide est structuré en étapes claires, avec des explications pas-à-pas et des exemples concrets. À la fin, un petit défi pratique est proposé pour mettre en œuvre les connaissances acquises.
+(2) utiliser l'outil d'IA GitHub Copilot (dans VS Code) pour assister les processus DevOps. 
 
 (Note : les instructions sont présentées en français, mais l'utilisation de Copilot peut nécessiter des requêtes en anglais pour de meilleurs résultats.)
 
@@ -149,8 +149,8 @@ Quels sont les conseils pour optimiser ce Dockerfile en termes de taille, sécur
 
 ### 🔹 Étape 2 : Appliquer les optimisations (Mode Edit / Agent)
 Utilisez les suggestions de Copilot pour modifier et améliorer vos Dockerfiles.
-👉 **Prompts Copilot suggérés :**
 
+👉 **Prompts Copilot suggérés :**
 ```text
 Tu es un Software Engineer senior spécialisé en Docker.
 Applique les optimisations suivantes à ce Dockerfile : [liste des optimisations].
@@ -168,4 +168,4 @@ Refaites un `docker-compose up --build` avec les Dockerfiles optimisés et véri
 
 **Félicitations !** Vous avez terminé le Workshop 1 sur les Dockerfiles et leur optimisation assistée par IA. Vous êtes maintenant prêt à passer au prochain atelier.
 
-[Workshop 2-kubernetes](./workshop/2-kubernetes/README.md)
+[Workshop 2-kubernetes](../2-kubernetes/README.md)

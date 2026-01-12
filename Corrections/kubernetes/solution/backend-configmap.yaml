@@ -1,0 +1,23 @@
+# =============================================================================
+# Backend ConfigMap - Version Solution
+# =============================================================================
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shopping-backend-config
+  namespace: shopping
+  labels:
+    app: shopping-backend
+data:
+  # Configuration Spring Boot
+  SPRING_APPLICATION_NAME: "shopping-backend"
+  SERVER_PORT: "8080"
+  
+  # Actuator endpoints
+  MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "health,info,prometheus,metrics"
+  MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
+  MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED: "true"
+  
+  # Logging
+  LOGGING_LEVEL_ROOT: "INFO"
+  LOGGING_LEVEL_COM_EXAMPLE: "DEBUG"

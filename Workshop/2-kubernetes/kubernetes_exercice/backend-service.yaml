@@ -1,0 +1,19 @@
+# =============================================================================
+# Backend Service - Version Exercice (À corriger)
+# =============================================================================
+# Ce fichier contient des problèmes à identifier.
+# =============================================================================
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-svc
+  # PROBLÈME : pas de namespace
+  # PROBLÈME : pas de labels cohérents
+spec:
+  type: NodePort  # PROBLÈME : NodePort exposé inutilement
+  selector:
+    app: backend
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080  # PROBLÈME : port hardcodé
