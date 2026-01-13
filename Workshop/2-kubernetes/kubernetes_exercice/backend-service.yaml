@@ -7,13 +7,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: backend-svc
-  # PROBLÈME : pas de namespace
-  # PROBLÈME : pas de labels cohérents
 spec:
-  type: NodePort  # PROBLÈME : NodePort exposé inutilement
+  type: NodePort 
   selector:
     app: backend
   ports:
     - port: 8080
       targetPort: 8080
-      nodePort: 30080  # PROBLÈME : port hardcodé
+      nodePort: 30080

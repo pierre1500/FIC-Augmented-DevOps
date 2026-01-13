@@ -3,19 +3,11 @@
 # =============================================================================
 # Ce fichier contient plusieurs problèmes à identifier et corriger.
 # Utilisez GitHub Copilot pour vous aider à les trouver !
-#
-# Indices des problèmes :
-# - Sécurité
-# - Ressources
-# - Probes de santé
-# - Bonnes pratiques Kubernetes
 # =============================================================================
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
-  # PROBLÈME : pas de namespace défini
-  # PROBLÈME : pas de labels
 spec:
   replicas: 1
   selector:
@@ -30,14 +22,6 @@ spec:
       
       containers:
         - name: backend
-          image: shopping-backend:latest
-          # PROBLÈME : imagePullPolicy manquant avec tag "latest"
-          
+          image: shopping-backend:latest          
           ports:
             - containerPort: 8080
-          
-          # PROBLÈME : pas de resources définies (requests/limits)
-          
-          # PROBLÈME : pas de probes de santé (liveness, readiness)
-          
-          # PROBLÈME : pas de securityContext au niveau container

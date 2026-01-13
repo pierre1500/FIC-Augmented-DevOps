@@ -18,13 +18,9 @@ spec:
       containers:
         - name: frontend
           image: shopping-frontend
-          # PROBLÈME : pas de tag d'image
           
           ports:
             - containerPort: 4200
-            # PROBLÈME : port de dev Angular au lieu de Nginx (80)
-          
-          # PROBLÈME : commande de dev au lieu de prod
           command: ["npm", "start"]
 
 ---
@@ -33,7 +29,7 @@ kind: Service
 metadata:
   name: frontend
 spec:
-  type: LoadBalancer  # PROBLÈME : LoadBalancer coûteux, utiliser Ingress
+  type: LoadBalancer 
   selector:
     app: frontend
   ports:
