@@ -1,0 +1,72 @@
+# Deployment Kubernetes avec des problèmes de sécurité intentionnels
+# Objectif : Identifier et corriger les vulnérabilités
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: insecure-backend
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      
+      containers:
+        - name: backend
+          image: shopping-backend:latest
+          
+          ports:
+            - containerPort: 8080
+          
+          env:
+            - name: DATABASE_URL
+              value: "jdbc:postgresql://db:5432/shopping"
+            - name: DATABASE_USERNAME
+              value: "admin"
+            - name: DATABASE_PASSWORD
+              value: "SuperSecretPassword123!"
+            - name: JWT_SECRET
+              value: "myJwtSecretKeyThatShouldNotBeHere"
+            - name: API_KEY
+              value: "sk-prod-1234567890abcdef"
+          
+    
+          securityContext:
+            privileged: true
+            runAsUser: 0
+            allowPrivilegeEscalation: true
+
+          volumeMounts:
+            - name: docker-socket
+              mountPath: /var/run/docker.sock
+            - name: host-etc
+              mountPath: /host-etc
+      
+      volumes:
+        - name: docker-socket
+          hostPath:
+            path: /var/run/docker.sock
+        - name: host-etc
+          hostPath:
+            path: /etc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: insecure-backend-service
+spec:
+  type: NodePort
+  selector:
+    app: backend
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080

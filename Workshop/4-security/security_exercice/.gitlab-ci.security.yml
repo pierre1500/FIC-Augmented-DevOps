@@ -1,0 +1,154 @@
+# Template de jobs de sécurité à intégrer dans la pipeline CI/CD
+# Objectif : Ajouter ces stages à votre pipeline du Workshop 3
+
+variables:
+  TRIVY_SEVERITY: "HIGH,CRITICAL"
+  TRIVY_EXIT_CODE: "1"
+  OWASP_DC_VERSION: "8.4.0"
+
+stages:
+  - build
+  - test
+  - security  # Nouveau stage
+  - docker
+  - deploy
+
+# =============================================================================
+# JOBS DE SÉCURITÉ À COMPLÉTER
+# =============================================================================
+
+dependency-check-backend:
+  stage: security
+  image: maven:3.9-eclipse-temurin-17
+  script:
+    - echo "À compléter : exécuter OWASP Dependency Check"
+  artifacts:
+    paths:
+      - backend/target/dependency-check-report.html
+    expire_in: 1 week
+  allow_failure: true
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_MERGE_REQUEST_ID
+
+npm-audit-frontend:
+  stage: security
+  image: node:21-alpine
+  script:
+    - echo "À compléter : exécuter npm audit"
+  artifacts:
+    paths:
+      - frontend/npm-audit-report.json
+    expire_in: 1 week
+  allow_failure: true
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_MERGE_REQUEST_ID
+
+trivy-scan-backend:
+  stage: security
+  image: aquasec/trivy:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+  script:
+    - echo "À compléter : scanner l'image backend avec Trivy"
+  artifacts:
+    paths:
+      - trivy-backend-report.json
+    expire_in: 1 week
+  allow_failure: false  
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  needs:
+    - build-docker-backend
+
+trivy-scan-frontend:
+  stage: security
+  image: aquasec/trivy:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+  script:
+    - echo "À compléter : scanner l'image frontend avec Trivy"
+  artifacts:
+    paths:
+      - trivy-frontend-report.json
+    expire_in: 1 week
+  allow_failure: false
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  needs:
+    - build-docker-frontend
+
+trivy-config-scan:
+  stage: security
+  image: aquasec/trivy:latest
+  script:
+    - echo "À compléter : scanner les Dockerfiles"
+  artifacts:
+    paths:
+      - trivy-config-report.json
+    expire_in: 1 week
+  allow_failure: true
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_MERGE_REQUEST_ID
+
+gitleaks-scan:
+  stage: security
+  image: zricethezav/gitleaks:latest
+  script:
+    - echo "À compléter : exécuter gitleaks"
+  artifacts:
+    paths:
+      - gitleaks-report.json
+    expire_in: 1 week
+  allow_failure: true  
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_MERGE_REQUEST_ID
+
+kubesec-scan:
+  stage: security
+  image: curlimages/curl:latest
+  script:
+    - echo "À compléter : scanner les manifests Kubernetes"
+  artifacts:
+    paths:
+      - kubesec-report.json
+    expire_in: 1 week
+  allow_failure: true
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+
+# =============================================================================
+# RAPPORT DE SÉCURITÉ CONSOLIDÉ
+# =============================================================================
+
+security-report:
+  stage: security
+  image: alpine:latest
+  script:
+    - echo "=== RAPPORT DE SÉCURITÉ CONSOLIDÉ ==="
+    - echo "Date : $(date)"
+    - echo ""
+    - echo "Résultats des scans :"
+    - echo "- Dependency Check Backend : voir artifact"
+    - echo "- npm audit Frontend : voir artifact"
+    - echo "- Trivy Backend : voir artifact"
+    - echo "- Trivy Frontend : voir artifact"
+    - echo "- Gitleaks : voir artifact"
+    - echo "- Kubesec : voir artifact"
+  needs:
+    - dependency-check-backend
+    - npm-audit-frontend
+    - trivy-scan-backend
+    - trivy-scan-frontend
+    - gitleaks-scan
+    - kubesec-scan
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  when: always

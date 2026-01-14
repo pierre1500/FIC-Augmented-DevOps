@@ -1,0 +1,74 @@
+# NetworkPolicy à compléter
+# Objectif : Restreindre le trafic réseau entre les composants
+
+# TODO: Créer une NetworkPolicy pour le backend
+# Règles attendues :
+# - Autoriser le trafic entrant UNIQUEMENT depuis le frontend (label: app=frontend)
+# - Autoriser le trafic entrant UNIQUEMENT sur le port 8080
+# - Bloquer tout autre trafic entrant
+# - Autoriser le trafic sortant vers la base de données (label: app=database) sur le port 5432
+# - Bloquer tout autre trafic sortant
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-network-policy
+  namespace: shopping
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - {}  
+  egress:
+    - {}  
+
+---
+# TODO: Créer une NetworkPolicy pour le frontend
+# Règles attendues :
+# - Autoriser le trafic entrant depuis n'importe où sur le port 80 (exposition publique)
+# - Autoriser le trafic sortant UNIQUEMENT vers le backend sur le port 8080
+# - Bloquer tout autre trafic sortant
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: frontend-network-policy
+  namespace: shopping
+spec:
+  podSelector:
+    matchLabels:
+      app: frontend
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - {}
+  egress:
+    - {}
+
+---
+# TODO: Créer une NetworkPolicy pour la base de données
+# Règles attendues :
+# - Autoriser le trafic entrant UNIQUEMENT depuis le backend sur le port 5432
+# - Bloquer tout trafic sortant (la DB n'a pas besoin de sortir)
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: database-network-policy
+  namespace: shopping
+spec:
+  podSelector:
+    matchLabels:
+      app: database
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - {}
+  egress:
+    []

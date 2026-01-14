@@ -1,0 +1,38 @@
+# Dockerfile avec des problèmes de sécurité intentionnels
+# Objectif : Identifier et corriger les vulnérabilités
+
+FROM openjdk:17
+
+
+
+WORKDIR /app
+
+COPY . .
+
+ENV DATABASE_PASSWORD=SuperSecret123!
+ENV API_KEY=sk-1234567890abcdef
+
+
+
+
+RUN apt-get update && apt-get install -y \
+    curl \
+    wget \
+    vim \
+    net-tools \
+    telnet \
+    && rm -rf /var/lib/apt/lists/*
+
+
+
+
+
+
+
+    RUN ./mvnw clean package -DskipTests
+
+EXPOSE 80
+
+
+
+CMD java -jar target/*.jar
